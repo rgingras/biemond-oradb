@@ -13,6 +13,7 @@
 #      group                     => 'dba',
 #      download_dir              => '/var/tmp/install',
 #      action                    => 'create',
+#      sid                       => 'test',
 #      db_name                   => 'test',
 #      db_domain                 => 'oracle.com',
 #      db_port                   => '1521',
@@ -71,6 +72,7 @@
 # @param template dbt template for your own full database configution
 # @param template_seeded seeded template name
 # @param template_variables variables which you can use in your dbt template
+# @param sid oracle system id
 # @param db_name database name
 # @param db_domain database domain name
 # @param sys_password sys username password
@@ -104,6 +106,7 @@ define oradb::database(
   Optional[String] $template                                      = undef,
   Optional[String] $template_seeded                               = undef,
   Optional[Hash] $template_variables                              = undef, # for dbt template
+  String $sid                                                     = lookup('oradb::sid'),
   String $db_name                                                 = lookup('oradb::database_name'),
   String $db_domain                                               = undef,
   Integer $db_port                                                = lookup('oradb::listener_port'),
@@ -187,12 +190,17 @@ define oradb::database(
     $globaldb_name = $db_name
   }
 
+  if $sid == undef {
+    $sid = $db_name
+  }
+
   if ! defined(File["${download_dir}/database_${sanitized_title}.rsp"]) {
     file { "${download_dir}/database_${sanitized_title}.rsp":
       ensure  => present,
       content => epp("oradb/dbca_${version}.rsp.epp",
                     { 'operationType'               => $operation_type,
                       'globaldb_name'               => $globaldb_name,
+                      'sid'                         => $sid,
                       'db_name'                     => $db_name,
                       'cluster_nodes'               => $cluster_nodes,
                       'sys_password'                => $sys_password,
@@ -260,11 +268,11 @@ define oradb::database(
       }
 
       if ( $version == '11.2') { # or $container_database == false ) {
-        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${db_name} -characterSet ${character_set} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -emConfiguration ${em_configuration} "
+        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${sid} -characterSet ${character_set} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -emConfiguration ${em_configuration} "
       } elsif ( $container_database == false ) {
-        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${db_name} -characterSet ${character_set} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -datafileDestination ${data_file_destination} -emConfiguration ${em_configuration} "
+        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${sid} -characterSet ${character_set} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -datafileDestination ${data_file_destination} -emConfiguration ${em_configuration} "
       } else {
-        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${db_name} -characterSet ${character_set} -createAsContainerDatabase ${container_database} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -datafileDestination ${data_file_destination} -emConfiguration ${em_configuration} "
+        $command_pre = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -templateName ${templatename} -gdbname ${globaldb_name} -sid ${sid} -characterSet ${character_set} -createAsContainerDatabase ${container_database} -responseFile NO_VALUE -sysPassword ${sys_password} -systemPassword ${system_password} -dbsnmpPassword ${db_snmp_password} -asmsnmpPassword ${asm_snmp_password} -storageType ${storage_type} -datafileDestination ${data_file_destination} -emConfiguration ${em_configuration} "
       }
 
       if ( $template_variables != undef) {
