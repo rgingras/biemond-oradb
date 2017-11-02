@@ -1,5 +1,6 @@
 <%- |  String $operationType,
        String $globaldb_name,
+       String $sid,
        String $db_name,
        Optional[String] $cluster_nodes = undef,
        String $sys_password,
