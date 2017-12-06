@@ -21,6 +21,7 @@ oradb::version:           '12.1'
 oradb::listener_port:     1521
 
 oradb::database_name:     'orcl'
+oradb::sid:               'orcl'
 oradb::host::service_name: 'dbora'
 
 oradb::default::password:       'Welcome01'
@@ -137,4 +138,3 @@ oradb::database::storage_type:          'FS' #FS|CFS|ASM
 oradb::database::asm_diskgroup:         'DATA'
 
 oradb::installdb::database_type:        'SE'
-
