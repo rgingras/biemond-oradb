@@ -24,6 +24,7 @@
       <InitParams>
          <initParam name="db_name" value="<%= @db_name %>"/>
          <initParam name="db_domain" value="<%= @db_domain %>"/>
+         <initParam name="db_unique_name" value="<%= @db_unique_name %>"/>
          <initParam name="dispatchers" value="(PROTOCOL=TCP) (SERVICE={SID}XDB)"/>
          <initParam name="audit_file_dest" value="{ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/adump"/>
          <initParam name="compatible" value="12.2.0.0.0"/>
