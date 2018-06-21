@@ -1,6 +1,7 @@
 <%- |  String $operationType,
        String $globaldb_name,
        String $db_name,
+       String $sid,
        Optional[String] $cluster_nodes = undef,
        String $sys_password,
        String $system_password,
@@ -229,7 +230,7 @@ GDBNAME = "<%= $globaldb_name %>"
 # Default value : <db_name> specified in Gdb_name
 # Mandatory     : No
 #-----------------------------------------------------------------------------
-SID = "<%= $db_name %>"
+SID = "<%= $sid %>"
 
 #-----------------------------------------------------------------------------
 # Name          : CREATEASCONTAINERDATABASE
