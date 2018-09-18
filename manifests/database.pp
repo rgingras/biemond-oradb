@@ -298,7 +298,7 @@ define oradb::database(
       if ( $version == '12.2' ) {
         $command = "${elevation_prefix}${oracle_home}/bin/dbca -silent -createDatabase -redoLogFileSize 2048 -responseFile ${download_dir}/database_${sanitized_title}.rsp${elevation_suffix}"
       } else {
-        $command = "${elevation_prefix}${oracle_home}/bin/dbca -silent -responseFile -redoLogFileSize 2048 ${download_dir}/database_${sanitized_title}.rsp${elevation_suffix}"
+        $command = "${elevation_prefix}${oracle_home}/bin/dbca -silent -redoLogFileSize 2048 -responseFile ${download_dir}/database_${sanitized_title}.rsp${elevation_suffix}"
       }
     }
 
