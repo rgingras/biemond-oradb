@@ -9,6 +9,7 @@
 /.vagrant/
 /coverage/
 /bin/
+/doc/
 /Gemfile.local
 /Gemfile.lock
 /junit/
@@ -16,10 +17,9 @@
 /pkg/
 /spec/fixtures/manifests/
 /spec/fixtures/modules/
+/spec/reports/
 /tmp/
 /vendor/
 /convert_report.txt
 /update_report.txt
 .DS_Store
-/coverage
-/spec/reports

@@ -1,5 +1,5 @@
 <?xml version = '1.0'?>
-<DatabaseTemplate name="<%= @db_name %>" description="<%= @db_name %> template" version="12.2.0.0.0">
+<DatabaseTemplate name="<%= @db_name %>" description="<%= @db_name %> template" version="18.0.0.0.0">
    <CommonAttributes>
       <option name="OMS" value="false"/>
       <option name="JSERVER" value="true"/>
@@ -24,10 +24,9 @@
       <InitParams>
          <initParam name="db_name" value="<%= @db_name %>"/>
          <initParam name="db_domain" value="<%= @db_domain %>"/>
-         <initParam name="db_unique_name" value="<%= @db_unique_name %>"/>
          <initParam name="dispatchers" value="(PROTOCOL=TCP) (SERVICE={SID}XDB)"/>
          <initParam name="audit_file_dest" value="{ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/adump"/>
-         <initParam name="compatible" value="12.1.0.0.0"/>
+         <initParam name="compatible" value="18.0.0.0.0"/>
          <initParam name="remote_login_passwordfile" value="EXCLUSIVE"/>
          <initParam name="processes" value="1000"/>
          <initParam name="undo_tablespace" value="UNDOTBS1"/>
