@@ -1,5 +1,6 @@
 <%- |  String $operationType,
        String $globaldb_name,
+       String $sid,
        String $db_name,
        Optional[String] $cluster_nodes = undef,
        String $sys_password,
@@ -65,7 +66,7 @@ gdbName=<%= $globaldb_name %>
 # Default value : <db_name> specified in GDBNAME
 # Mandatory     : No
 #-----------------------------------------------------------------------------
-sid=<%= $db_name %>
+sid=<%= $sid %>
 
 #-----------------------------------------------------------------------------
 # Name          : databaseConfigType
